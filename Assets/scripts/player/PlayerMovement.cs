@@ -9,8 +9,6 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce;
     public float dashSpeed;
     public float dashDuration;
-    public float slideSpeed;
-    public float slideDuration;
     private bool isDashing = false;
     private bool isSliding = false;
     private bool canDoubleJump = false;
@@ -40,7 +38,6 @@ public class PlayerMovement : MonoBehaviour
         moveInput = Input.GetAxis("Horizontal");
         jumpInput = Input.GetButtonDown("Jump");
         dashInput = Input.GetKeyDown(KeyCode.LeftShift);
-        slideInput = Input.GetKeyDown(KeyCode.LeftControl);
 
         if (isGrounded)
         {
@@ -64,11 +61,6 @@ public class PlayerMovement : MonoBehaviour
         {
             StartCoroutine(Dash());
             canDash = false;
-        }
-
-        if (slideInput && !isSliding)
-        {
-            StartCoroutine(Slide());
         }
     }
 
@@ -129,14 +121,5 @@ public class PlayerMovement : MonoBehaviour
         rb.gravityScale = originalGravity;
         isDashing = false;
     }
-
-    IEnumerator Slide()
-    {
-        isSliding = true;
-        float originalSpeed = moveSpeed;
-        moveSpeed = slideSpeed;
-        yield return new WaitForSeconds(slideDuration);
-        moveSpeed = originalSpeed;
-        isSliding = false;
-    }
+    
 }

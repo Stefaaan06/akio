@@ -17,12 +17,10 @@ public class playerFX : MonoBehaviour
     void DeformPlayer()
     {
         float speed = playerMovement.rb.velocity.magnitude;
-        float targetDeformationFactor = Mathf.Clamp(speed / playerMovement.moveSpeed, 1f, 1.4f); // Stronger deformation
+        float targetDeformationFactor = Mathf.Clamp(speed / playerMovement.maxSpeed, 1f, 1.3f); // Stronger deformation
 
         currentDeformationFactor = Mathf.Lerp(currentDeformationFactor, targetDeformationFactor, Time.deltaTime * deformationSpeed);
-
-        float direction = playerMovement.rb.velocity.x >= 0 ? 1 : -1;
-
-        spriteRenderer.transform.localScale = new Vector3(currentDeformationFactor * direction, 1 / currentDeformationFactor, 1);
+        
+        spriteRenderer.transform.localScale = new Vector3(currentDeformationFactor, 1 / currentDeformationFactor, 1);
     }
 }
