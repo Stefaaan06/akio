@@ -13,18 +13,24 @@ public class PlayerMovement : MonoBehaviour
     private bool isSliding = false;
     private bool canDoubleJump = false;
 
+    [Header("Wall Running/Jumping")]
+    public float wallJumpForce;
+    private bool isTouchingWall = false;
+
     [Header("References")]
     public Rigidbody2D rb;
     public Collider2D coll;
     public ParticleSystem dash;
-    
+
     // Ground check
     public Transform groundCheck;
     public float groundCheckRadius;
     public LayerMask groundLayer;
     public bool isGrounded;
-    
-    
+
+    // Coyote Time
+    public float coyoteTime = 0.2f;
+    private float coyoteTimeCounter;
 
     private float moveInput;
     private bool jumpInput;
@@ -32,6 +38,10 @@ public class PlayerMovement : MonoBehaviour
     private bool slideInput;
 
     private bool canDash = true;
+
+    public GameObject eye;
+    public GameObject eye1;
+    public GameObject eye2;
 
     void Update()
     {
@@ -42,25 +52,36 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded)
         {
             canDash = true;
+            coyoteTimeCounter = coyoteTime;
         }
-        if (jumpInput)
+        else
         {
-            if (isGrounded)
-            {
-                Jump();
-                canDoubleJump = true;
-            }
-            else if (canDoubleJump)
-            {
-                Jump();
-                canDoubleJump = false;
-            }
+            coyoteTimeCounter -= Time.deltaTime;
+        }
+
+        if (jumpInput && (isGrounded || coyoteTimeCounter > 0f))
+        {
+            Jump();
+            canDoubleJump = true;
+        }
+        else if (jumpInput && isTouchingWall)
+        {
+            WallJump();
         }
 
         if (dashInput && !isDashing && canDash)
         {
             StartCoroutine(Dash());
             canDash = false;
+        }
+
+        if (moveInput > 0)
+        {
+            eye.transform.position = eye1.transform.position;
+        }
+        else if (moveInput < 0)
+        {
+            eye.transform.position = eye2.transform.position;
         }
     }
 
@@ -98,17 +119,22 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Mathf.Abs(velocity.x) > 0.01f && Mathf.Abs(moveInput) < 0.02f)
             {
-                rb.AddForce(new Vector2(-velocity.x * moveSpeed * 0.05f, 0), ForceMode2D.Force);
+                rb.AddForce(new Vector2(-velocity.x * moveSpeed * 0.02f, 0), ForceMode2D.Force);
             }
         }
-
- 
     }
 
     void Jump()
     {
         rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
     }
+
+    void WallJump()
+    {
+        rb.velocity = new Vector2(-moveInput * wallJumpForce, wallJumpForce);
+        isTouchingWall = false;
+    }
+    
 
     IEnumerator Dash()
     {
@@ -121,5 +147,20 @@ public class PlayerMovement : MonoBehaviour
         rb.gravityScale = originalGravity;
         isDashing = false;
     }
-    
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Wallrunn"))
+        {
+            isTouchingWall = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Wallrunn"))
+        {
+            isTouchingWall = false;
+        }
+    }
 }

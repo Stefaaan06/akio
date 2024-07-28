@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunName: Pistol
   gunPrefab: {fileID: 9208851506727822736, guid: 60b17519cf06c934fb9d7fda932b9a27, type: 3}
-  damage: 15
-  range: 100
-  maxRange: 100
-  fireRate: 5
+  damage: 34
+  range: 20
+  maxRange: 20
+  fireRate: 3
   maxClipSize: 20
   currentClipSize: 20
-  feedback: 500
-  reloadTime: 1
+  feedback: 100
+  reloadTime: 2
   allowAutoFire: 0

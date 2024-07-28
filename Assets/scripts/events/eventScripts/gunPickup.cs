@@ -8,6 +8,7 @@ public class gunPickup : MonoBehaviour
     public gun gun;
 
     private playerGun _playerGun;
+    
     private void Start()
     {
         _playerGun = FindObjectOfType<playerGun>();
