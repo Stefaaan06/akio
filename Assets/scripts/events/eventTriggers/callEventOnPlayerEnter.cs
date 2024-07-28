@@ -11,14 +11,14 @@ public class callEventOnPlayerEnter : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log(Time.deltaTime);   
-        if (other.CompareTag("player"))
+        if (other.CompareTag("Player"))
         {
             onTriggerEnter.Invoke();
         }
     }
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("player"))
+        if (other.CompareTag("Player"))
         {
             onTriggerExit.Invoke();
         }
