@@ -9,6 +9,7 @@ public class playerFX : MonoBehaviour
     private float currentDeformationFactor = 1f;
     public float deformationSpeed = 5f; // Speed of the deformation transition
     public ParticleSystem collisionSystem;
+    public PlayerSoundManager soundManager;
     void Update()
     {
         DeformPlayer();
@@ -31,6 +32,7 @@ public class playerFX : MonoBehaviour
             ParticleSystem sys = Instantiate(collisionSystem);
             sys.transform.position = contact.point;
             sys.Play();
+            soundManager.playHitSound();
         }
     }
 }

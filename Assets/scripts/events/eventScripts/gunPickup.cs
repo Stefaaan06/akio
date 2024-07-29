@@ -12,7 +12,6 @@ public class gunPickup : MonoBehaviour
     private void Start()
     {
         _playerGun = FindObjectOfType<playerGun>();
-        Debug.Log("playerGun found: " + _playerGun);
     }
 
     

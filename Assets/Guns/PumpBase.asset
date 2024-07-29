@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7f77d35f6fca944e9d584325023dceb, type: 3}
+  m_Name: PumpBase
+  m_EditorClassIdentifier: 
+  gunName: Pump
+  gunPrefab: {fileID: 9208851506727822736, guid: 0c2e41ceecdae0d469df3f5c757f6a52, type: 3}
+  damage: 100
+  range: 30
+  maxRange: 100
+  fireRate: 2
+  maxClipSize: 10
+  currentClipSize: 10
+  feedback: 600
+  reloadTime: 3
+  allowAutoFire: 0

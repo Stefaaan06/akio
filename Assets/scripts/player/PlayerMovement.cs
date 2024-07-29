@@ -21,6 +21,8 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody2D rb;
     public Collider2D coll;
     public ParticleSystem dash;
+    public PlayerSoundManager soundManager;
+
 
     // Ground check
     public Transform groundCheck;
@@ -127,17 +129,20 @@ public class PlayerMovement : MonoBehaviour
     void Jump()
     {
         rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+        soundManager.playJumpSound();
     }
 
     void WallJump()
     {
         rb.velocity = new Vector2(-moveInput * wallJumpForce, wallJumpForce);
         isTouchingWall = false;
+        soundManager.playJumpSound();
     }
     
 
     IEnumerator Dash()
     {
+        soundManager.playDashSound();
         isDashing = true;
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0;
