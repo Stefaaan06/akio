@@ -9,7 +9,8 @@ public class PlayerSoundManager : MonoBehaviour
     public AudioClip damageSound;
     public AudioClip hitSound;
     public AudioClip shootSound;
-
+    
+    public cameraShake cameraShake;
     public AudioSource audioSource;
 
     private float volumeDeviation = 0.1f;
@@ -34,6 +35,7 @@ public class PlayerSoundManager : MonoBehaviour
 
     public void playDamageSound()
     {
+        cameraShake.ShakeOnce(.10f, .5f);
         PlaySound(damageSound);
     }
 
@@ -44,6 +46,7 @@ public class PlayerSoundManager : MonoBehaviour
 
     public void playShootSound()
     {
+        cameraShake.ShakeOnce(.6f);
         PlaySound(shootSound);
     }
 }
