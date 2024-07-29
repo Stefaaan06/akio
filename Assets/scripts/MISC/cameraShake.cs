@@ -9,6 +9,7 @@ public class cameraShake : MonoBehaviour
     
     public void ShakeOnce(float amplitude = .1f, float time = .05f)
     {
+        if(PlayerPrefs.GetInt("cameraShake") == 0) return;
         StartCoroutine(shakeEnum(amplitude, time));
     }
 

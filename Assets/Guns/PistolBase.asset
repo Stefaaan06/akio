@@ -20,6 +20,6 @@ MonoBehaviour:
   fireRate: 3
   maxClipSize: 20
   currentClipSize: 20
-  feedback: 100
+  feedback: 200
   reloadTime: 2
   allowAutoFire: 0

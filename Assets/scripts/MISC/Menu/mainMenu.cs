@@ -13,6 +13,7 @@ public class mainMenu : MonoBehaviour
     public Slider volume;
     public AudioMixer mixer;
     public GameObject[] toggleImages;
+    public LeaderboardManager leaderboardManager;
     public void Quit()
     {
         Application.Quit();
@@ -20,9 +21,12 @@ public class mainMenu : MonoBehaviour
 
     void Awake()
     {
+        PlayerPrefs.SetInt("time", 0);
         PlayerPrefs.SetInt("checkpoint", 0);
         if (PlayerPrefs.GetInt("Start") == 0)
         {
+            Debug.Log("Resetting");
+            leaderboardManager.ResetLeaderboard();
             PlayerPrefs.SetInt("quality", 0);
             PlayerPrefs.SetInt("volume ",0);
             PlayerPrefs.SetInt("Start", 1);

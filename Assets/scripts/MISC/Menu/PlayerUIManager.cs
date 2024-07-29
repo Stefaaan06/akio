@@ -19,6 +19,14 @@ public class PlayerUIManager : MonoBehaviour
         
     public void restart()
     {
+        PlayerPrefs.SetInt("time", 0);
+        PlayerPrefs.SetInt("checkpoint", 0);
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    
+    public void checkpoint()
+    {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }

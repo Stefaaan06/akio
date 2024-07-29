@@ -176,7 +176,7 @@ public class playerGun : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(_gunObjects[this._currentGun].transform.position, direction, playerGuns[this._currentGun].range, hitLayer);
         if (hit.collider != null)
         {
-            playerRigidbody.AddForce(-direction * (_currentGun.feedback * 2), ForceMode2D.Impulse);
+            playerRigidbody.AddForce(-direction * (_currentGun.feedback), ForceMode2D.Impulse);
             if (hit.transform.gameObject.CompareTag("Enemy"))
             {
                 Instantiate(debugEnemy, hit.point, transform.rotation);
@@ -194,7 +194,7 @@ public class playerGun : MonoBehaviour
         }
         else
         {
-            playerRigidbody.AddForce(-direction * _currentGun.feedback, ForceMode2D.Impulse);
+            playerRigidbody.AddForce(-direction * _currentGun.feedback / 2, ForceMode2D.Impulse);
         }
 
         _lastShotTime = Time.time;
