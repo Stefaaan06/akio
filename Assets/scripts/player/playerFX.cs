@@ -17,7 +17,7 @@ public class playerFX : MonoBehaviour
 
     void DeformPlayer()
     {
-        float speed = playerMovement.rb.velocity.magnitude;
+        float speed = playerMovement.rb.linearVelocity.magnitude;
         float targetDeformationFactor = Mathf.Clamp(speed / playerMovement.maxSpeed, 1f, 1.3f); // Stronger deformation
 
         currentDeformationFactor = Mathf.Lerp(currentDeformationFactor, targetDeformationFactor, Time.deltaTime * deformationSpeed);

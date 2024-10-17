@@ -100,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
 
     void ApplyMovement()
     {
-        if (Mathf.Abs(rb.velocity.x) < maxSpeed)
+        if (Mathf.Abs(rb.linearVelocity.x) < maxSpeed)
         {
             rb.AddForce(new Vector2(moveInput * moveSpeed, 0), ForceMode2D.Force);
         }
@@ -108,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
 
     void ApplyCounterMovement()
     {
-        Vector2 velocity = rb.velocity;
+        Vector2 velocity = rb.linearVelocity;
 
         if (isGrounded)
         {
@@ -134,7 +134,7 @@ public class PlayerMovement : MonoBehaviour
 
     void WallJump()
     {
-        rb.velocity = new Vector2(-moveInput * wallJumpForce, wallJumpForce);
+        rb.linearVelocity = new Vector2(-moveInput * wallJumpForce, wallJumpForce);
         isTouchingWall = false;
         soundManager.playJumpSound();
     }
@@ -147,7 +147,7 @@ public class PlayerMovement : MonoBehaviour
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0;
         dash.Play();
-        rb.velocity = new Vector2(moveInput * dashSpeed, 0);
+        rb.linearVelocity = new Vector2(moveInput * dashSpeed, 0);
         yield return new WaitForSeconds(dashDuration);
         rb.gravityScale = originalGravity;
         isDashing = false;
