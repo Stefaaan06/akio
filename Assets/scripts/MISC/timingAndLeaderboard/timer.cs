@@ -16,6 +16,7 @@ public class Stopwatch : MonoBehaviour
 
     void Update()
     {
+
         if (isRunning)
         {
             // Update the elapsed time

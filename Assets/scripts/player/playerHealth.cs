@@ -14,7 +14,6 @@ public class playerHealth : MonoBehaviour
     
     public PlayerUIManager uiManager;
     public PlayerSoundManager soundManager;
-    public Stopwatch timer;
 
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -49,7 +48,6 @@ public class playerHealth : MonoBehaviour
 
     void Die()
     {
-        timer.saveTime();
         uiManager.death();
     }
 }

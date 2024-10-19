@@ -10,8 +10,6 @@ public class checkpointManager : MonoBehaviour
     private void Start()
     {
         int checkpointNumber = PlayerPrefs.GetInt("checkpoint");
-        Debug.Log(checkpointNumber);
-        Debug.Log(checkpoints[checkpointNumber]);
         player.transform.position = checkpoints[checkpointNumber].transform.position;
     }
 }

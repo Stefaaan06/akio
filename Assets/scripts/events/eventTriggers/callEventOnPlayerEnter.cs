@@ -10,7 +10,6 @@ public class callEventOnPlayerEnter : MonoBehaviour
     private bool enter;
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(Time.deltaTime);   
         if (other.CompareTag("Player"))
         {
             onTriggerEnter.Invoke();

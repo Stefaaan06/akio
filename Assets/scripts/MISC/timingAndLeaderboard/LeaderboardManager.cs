@@ -1,64 +1,66 @@
-using System.IO;
-using System.Text;
+using System;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using TMPro;
+using Unity.Services.Authentication;
+using Unity.Services.Leaderboards;
 using UnityEngine;
+using Unity.Services.Core;
 
 public class LeaderboardManager : MonoBehaviour
 {
-    private string filePath;
-    public TMPro.TMP_Text leaderboardText;
+    public string leaderboardID = "time"; 
+    public TextMeshProUGUI leaderboardText;
+    public RectTransform content;
 
-    private void Awake()
+    [Serializable]
+    public class LeaderboardEntry
     {
-        filePath = Application.persistentDataPath + "/leaderboard.dat";
+        public string playerId;
+        public string playerName;
+        public int rank;
+        public float score;
     }
 
-    public void AddEntry(string playerName, string time)
+    [Serializable]
+    public class LeaderboardData
     {
-        LeaderboardData leaderboard = LoadData();
-        LeaderboardEntry newEntry = new LeaderboardEntry { playerName = playerName, time = time };
-        leaderboard.entries.Add(newEntry);
-        SaveData(leaderboard);
-    }
-
-    private void SaveData(LeaderboardData data)
-    {
-        string json = JsonUtility.ToJson(data);
-        string encryptedData = EncryptionUtility.Encrypt(json);
-        File.WriteAllText(filePath, encryptedData);
-    }
-
-    private LeaderboardData LoadData()
-    {
-        if (!File.Exists(filePath))
-        {
-            return new LeaderboardData();
-        }
-
-        string encryptedData = File.ReadAllText(filePath);
-        string json = EncryptionUtility.Decrypt(encryptedData);
-        return JsonUtility.FromJson<LeaderboardData>(json);
-    }
-
-    public void DisplayLeaderboard()
-    {
-        LeaderboardData leaderboard = LoadData();
-        leaderboard.entries.Sort((a, b) => string.Compare(a.time, b.time)); // Assuming time is formatted correctly
-
-        StringBuilder sb = new StringBuilder();
-        foreach (var entry in leaderboard.entries)
-        {
-            sb.AppendLine($"{entry.playerName}: {entry.time}");
-        }
-
-        leaderboardText.text = sb.ToString();
+        public int limit;
+        public int total;
+        public List<LeaderboardEntry> results;
     }
     
-    public void ResetLeaderboard()
+    public async void ReportScore(double score)
+    { 
+        await UnityServices.InitializeAsync();
+        await LeaderboardsService.Instance.AddPlayerScoreAsync(leaderboardID, score);
+    }
+
+    public async void GetScores()
     {
-        if (File.Exists(filePath))
+        try
         {
-            File.Delete(filePath);
+            var scoresResponse = await LeaderboardsService.Instance.GetScoresAsync(leaderboardID);
+            string json = JsonConvert.SerializeObject(scoresResponse);
+            LeaderboardData leaderboardData = JsonConvert.DeserializeObject<LeaderboardData>(json);
+            
+            foreach (var entry in leaderboardData.results)
+            {
+                int rank = entry.rank + 1;
+                string playerName = entry.playerName;
+                float score = entry.score;
+
+                leaderboardText.text += $"{rank}\t{playerName}\t\t{score:F2}\n";
+            }
+            
+            // Calculate the required height for the content RectTransform
+            float requiredHeight = leaderboardText.preferredHeight;
+            content.sizeDelta = new Vector2(content.sizeDelta.x, requiredHeight);
+
         }
-        DisplayLeaderboard();
+        catch (Exception ex)
+        {
+            Debug.LogError($"Error fetching leaderboard scores: {ex.Message}");
+        }
     }
 }

@@ -10,11 +10,17 @@ public class PlayerUIManager : MonoBehaviour
     public buttonHover[] hoverEffects;
     
     public GameObject continueButton;
+    public Stopwatch timer;
+
+    
+    bool dead = false;
 
     public void death()
     {
+        timer.saveTime();
         pause();
         continueButton.SetActive(false);
+        dead = true;
     }
         
     public void restart()
@@ -27,6 +33,10 @@ public class PlayerUIManager : MonoBehaviour
     
     public void checkpoint()
     {
+        if(PlayerPrefs.GetInt("checkpoint") != 0)
+        {
+            timer.saveTime();
+        }
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
@@ -66,6 +76,7 @@ public class PlayerUIManager : MonoBehaviour
 
     public void Update()
     {
+        if(dead) return;
         if (Input.GetKeyDown(KeyCode.Escape) && !pauseMenu.activeSelf)
         {
             pause();

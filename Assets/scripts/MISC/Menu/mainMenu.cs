@@ -7,6 +7,8 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Unity.Services.Authentication;
+using Unity.Services.Core;
 
 public class mainMenu : MonoBehaviour
 {
@@ -14,6 +16,7 @@ public class mainMenu : MonoBehaviour
     public AudioMixer mixer;
     public GameObject[] toggleImages;
     public LeaderboardManager leaderboardManager;
+    
     public void Quit()
     {
         Application.Quit();
@@ -26,7 +29,6 @@ public class mainMenu : MonoBehaviour
         if (PlayerPrefs.GetInt("Start") == 0)
         {
             Debug.Log("Resetting");
-            leaderboardManager.ResetLeaderboard();
             PlayerPrefs.SetInt("quality", 0);
             PlayerPrefs.SetInt("volume ",0);
             PlayerPrefs.SetInt("Start", 1);
