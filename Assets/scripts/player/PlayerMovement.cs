@@ -40,13 +40,20 @@ public class PlayerMovement : MonoBehaviour
     private bool slideInput;
 
     private bool canDash = true;
+    
 
+    public PlayerUIManager playerUIManager;
+    
     public GameObject eye;
     public GameObject eye1;
     public GameObject eye2;
 
     void Update()
     {
+        if(playerUIManager.paused)
+        {
+            return;
+        }
         moveInput = Input.GetAxis("Horizontal");
         jumpInput = Input.GetButtonDown("Jump");
         dashInput = Input.GetKeyDown(KeyCode.LeftShift);

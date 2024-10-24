@@ -48954,6 +48954,7 @@ MonoBehaviour:
   - {fileID: 1425547958}
   continueButton: {fileID: 1957448938}
   timer: {fileID: 1520918785}
+  paused: 0
 --- !u!82 &1547976371
 AudioSource:
   m_ObjectHideFlags: 0
@@ -68392,7 +68393,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2642806868755987612}
-  - component: {fileID: 5350667865336685964}
   m_Layer: 0
   m_Name: PLAYER LOGIC
   m_TagString: Untagged
@@ -68400,18 +68400,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &5350667865336685964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5350667865336685963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81a1c41d9ec896c4091cdf9a9caf0128, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &5459179722478538495
 Rigidbody2D:
   serializedVersion: 5
@@ -68691,6 +68679,7 @@ MonoBehaviour:
     m_Bits: 5120
   isGrounded: 0
   coyoteTime: 0.2
+  playerUIManager: {fileID: 1547976370}
   eye: {fileID: 8652023556399074431}
   eye1: {fileID: 6518502995839391933}
   eye2: {fileID: 1016178328701918481}

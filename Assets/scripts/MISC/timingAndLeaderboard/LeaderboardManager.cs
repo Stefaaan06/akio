@@ -40,7 +40,7 @@ public class LeaderboardManager : MonoBehaviour
     {
         try
         {
-            var scoresResponse = await LeaderboardsService.Instance.GetScoresAsync(leaderboardID);
+            var scoresResponse = await LeaderboardsService.Instance.GetScoresAsync(leaderboardID, new GetScoresOptions { Limit = 100 });
             string json = JsonConvert.SerializeObject(scoresResponse);
             LeaderboardData leaderboardData = JsonConvert.DeserializeObject<LeaderboardData>(json);
             

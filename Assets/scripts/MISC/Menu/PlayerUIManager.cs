@@ -14,6 +14,7 @@ public class PlayerUIManager : MonoBehaviour
 
     
     bool dead = false;
+    public bool paused = false;
 
     public void death()
     {
@@ -25,6 +26,7 @@ public class PlayerUIManager : MonoBehaviour
         
     public void restart()
     {
+        paused = false;
         PlayerPrefs.SetInt("time", 0);
         PlayerPrefs.SetInt("checkpoint", 0);
         Time.timeScale = 1f;
@@ -33,6 +35,7 @@ public class PlayerUIManager : MonoBehaviour
     
     public void checkpoint()
     {
+        paused = false;
         if(PlayerPrefs.GetInt("checkpoint") != 0)
         {
             timer.saveTime();
@@ -54,6 +57,7 @@ public class PlayerUIManager : MonoBehaviour
 
     public void pause()
     {
+        paused = true;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         pauseMenu.SetActive(true);
@@ -62,6 +66,7 @@ public class PlayerUIManager : MonoBehaviour
     
     public void continueLevel()
     {
+        paused = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         pauseMenu.SetActive(false);
@@ -84,6 +89,15 @@ public class PlayerUIManager : MonoBehaviour
         else if(Input.GetKeyDown(KeyCode.Escape))
         {
             continueLevel();
+        }
+        
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            restart();
+        }
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            checkpoint();
         }
     }
 }
