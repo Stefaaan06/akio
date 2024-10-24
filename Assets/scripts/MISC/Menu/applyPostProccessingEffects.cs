@@ -12,15 +12,13 @@ public class applyPostProccessingEffects : MonoBehaviour
     private void Awake()
     {
         postProcessLayer.profile.TryGetSettings(out _mb);
-        int motionBlurr = PlayerPrefs.GetInt("motionBlur");
-        if (motionBlurr == 0)
-        {
-            _mb.active = true;
-        }
-        else
-        {
-            _mb.active = false;
-        }
+        UpdateEffects();
+    }
+
+    //reduncany cus of my retarded code <3 
+    private void Start()
+    {
+        UpdateEffects();
     }
 
     public void UpdateEffects()
@@ -33,6 +31,14 @@ public class applyPostProccessingEffects : MonoBehaviour
         else
         {
             _mb.active = false;
+        }
+        int qualityLevel = QualitySettings.GetQualityLevel();
+        if(qualityLevel == 0)
+        {
+            postProcessLayer.enabled = false;
+        }else
+        {
+            postProcessLayer.enabled = true;
         }
     }
 }

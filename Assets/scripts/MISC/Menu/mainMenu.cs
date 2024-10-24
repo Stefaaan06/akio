@@ -42,7 +42,7 @@ public class mainMenu : MonoBehaviour
 
     public void UpdateValues()
     {
-        mixer.SetFloat("GIT", volume.value);
+        mixer.SetFloat("volume", volume.value);
         PlayerPrefs.SetFloat("volume", volume.value);
     }
 
@@ -96,6 +96,8 @@ public class mainMenu : MonoBehaviour
         }
     }
 
+    
+    
     public void loadLevel(int index)
     {
         SceneManager.LoadScene(index);
