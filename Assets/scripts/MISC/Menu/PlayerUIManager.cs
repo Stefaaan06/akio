@@ -16,6 +16,12 @@ public class PlayerUIManager : MonoBehaviour
     bool dead = false;
     public bool paused = false;
 
+
+    public void Start()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
     public void death()
     {
         timer.saveTime();
@@ -67,8 +73,8 @@ public class PlayerUIManager : MonoBehaviour
     public void continueLevel()
     {
         paused = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         pauseMenu.SetActive(false);
 
         foreach (buttonHover b in hoverEffects)
