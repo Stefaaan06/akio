@@ -9,9 +9,11 @@ using Unity.Services.Core;
 
 public class LeaderboardManager : MonoBehaviour
 {
-    public string leaderboardID = "time"; 
+    public string leaderboardID = "time";
     public TextMeshProUGUI leaderboardText;
     public RectTransform content;
+    public TextMeshProUGUI playerNameText;
+    public TextMeshProUGUI rankText;
 
     [Serializable]
     public class LeaderboardEntry
@@ -29,11 +31,22 @@ public class LeaderboardManager : MonoBehaviour
         public int total;
         public List<LeaderboardEntry> results;
     }
-    
+
     public async void ReportScore(double score)
-    { 
+    {
         await UnityServices.InitializeAsync();
         await LeaderboardsService.Instance.AddPlayerScoreAsync(leaderboardID, score);
+    }
+
+    public void DisplayUserName()
+    {
+        playerNameText.text = $"Player: {AuthenticationService.Instance.PlayerName}";
+    }
+
+    public async void DisplayPersonalBest()
+    {
+        var scoresResponse = await LeaderboardsService.Instance.GetPlayerScoreAsync(leaderboardID);
+        rankText.text = $"Rank: {scoresResponse.Rank + 1}";
     }
 
     public async void GetScores()
@@ -43,7 +56,9 @@ public class LeaderboardManager : MonoBehaviour
             var scoresResponse = await LeaderboardsService.Instance.GetScoresAsync(leaderboardID, new GetScoresOptions { Limit = 100 });
             string json = JsonConvert.SerializeObject(scoresResponse);
             LeaderboardData leaderboardData = JsonConvert.DeserializeObject<LeaderboardData>(json);
-            
+
+            leaderboardText.text = ""; 
+
             foreach (var entry in leaderboardData.results)
             {
                 int rank = entry.rank + 1;
@@ -52,9 +67,8 @@ public class LeaderboardManager : MonoBehaviour
 
                 leaderboardText.text += $"{rank}\t{playerName}\t\t{score:F2}\n";
             }
-            
-            // Calculate the required height for the content RectTransform
-            float requiredHeight = leaderboardText.preferredHeight;
+
+            float requiredHeight = leaderboardData.results.Count * leaderboardText.fontSize * 0.9f; 
             content.sizeDelta = new Vector2(content.sizeDelta.x, requiredHeight);
 
         }
