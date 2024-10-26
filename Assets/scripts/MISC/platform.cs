@@ -8,7 +8,6 @@ public class platform : MonoBehaviour
     public float moveDistance = 3f; // Distance the platform moves from its start position
 
     private Vector3 startPosition;
-    private int direction = 1;
 
     void Start()
     {

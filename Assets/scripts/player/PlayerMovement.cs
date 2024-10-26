@@ -11,7 +11,6 @@ public class PlayerMovement : MonoBehaviour
     public float dashDuration;
     private bool isDashing = false;
     private bool isSliding = false;
-    private bool canDoubleJump = false;
 
     [Header("Wall Running/Jumping")]
     public float wallJumpForce;
@@ -71,7 +70,6 @@ public class PlayerMovement : MonoBehaviour
         if (jumpInput && (isGrounded || coyoteTimeCounter > 0f))
         {
             Jump();
-            canDoubleJump = true;
         }
         else if (jumpInput && isTouchingWall)
         {
