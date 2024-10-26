@@ -1,5 +1,5 @@
-# Akio - Score Space Jam 2024
-This is a repo for my game "Akio" for the [Score Space Jam 2024](https://itch.io/jam/polymarsxspeedjam), developed over a span of 3 days.
+# Akio 
+This is a repo for the open source game "Akio" 
 
 # About the Game
 Akio is a fast paced, 2D platformer focused on speedrunning created for ScoreSpace2024 gamejam in 3 days. 
