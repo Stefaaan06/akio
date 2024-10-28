@@ -72,6 +72,15 @@ public class mainMenu : MonoBehaviour
         {
             toggleImages[1].SetActive(true);
         }
+        int debugInfo = PlayerPrefs.GetInt("debugInfo");
+        if (debugInfo == 1)
+        {
+            toggleImages[5].SetActive(true);
+        }
+        else
+        {
+            toggleImages[5].SetActive(false);
+        }
 
         int quality = PlayerPrefs.GetInt("quality");
         switch (quality)
@@ -128,6 +137,20 @@ public class mainMenu : MonoBehaviour
         {
             toggleImages[1].SetActive(true);
             PlayerPrefs.SetInt("motionBlur", 0);
+        }
+    }
+    
+    public void debugInfo()
+    {
+        if (toggleImages[5].activeSelf)
+        {
+            toggleImages[5].SetActive(false);
+            PlayerPrefs.SetInt("debugInfo", 0);
+        }
+        else
+        {
+            toggleImages[5].SetActive(true);
+            PlayerPrefs.SetInt("debugInfo", 1);
         }
     }
 

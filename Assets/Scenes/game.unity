@@ -19761,6 +19761,7 @@ MonoBehaviour:
   player: {fileID: 4276640542444588070}
   playerSpeed: {fileID: 825716096}
   playerPosition: {fileID: 537231585}
+  debug: {fileID: 809774879}
 --- !u!1 &821972661
 GameObject:
   m_ObjectHideFlags: 0
