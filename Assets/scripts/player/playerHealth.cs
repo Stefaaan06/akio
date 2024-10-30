@@ -21,10 +21,21 @@ public class playerHealth : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Enemy"))
         {
-            if(playerMovement.isDashing && other.gameObject.layer == 12)
+            if(playerMovement.isDashing && other.gameObject.layer == 12) 
             {
-                other.gameObject.GetComponent<health>().removeHP(25);
-                rb.AddForce(new Vector2(0, upwardForce)); // Add upward force
+                other.gameObject.GetComponent<health>().removeHP(50);
+                if (playerMovement.isUpwardsDashing)
+                {
+                    rb.AddForce(new Vector2(0, upwardForce / 3)); 
+                }
+                else if (playerMovement.isDownwardsDashing)
+                {
+                    rb.AddForce(new Vector2(0, upwardForce * 2));
+                }
+                else
+                {
+                    rb.AddForce(new Vector2(0, upwardForce));
+                }
                 return;
             }
             health--;

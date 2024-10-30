@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
     public float dashSpeed;
     public float dashDuration;
     public bool isDashing = false;
+    public bool isUpwardsDashing = false;
+    public bool isDownwardsDashing = false;
     private bool isSliding = false;
 
     [Header("Wall Running/Jumping")]
@@ -173,6 +175,7 @@ public class PlayerMovement : MonoBehaviour
     {
         soundManager.playDashSound();
         isDashing = true;
+        isDownwardsDashing = true;
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0;
         dash.Play();
@@ -180,12 +183,14 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(dashDuration);
         rb.gravityScale = originalGravity;
         isDashing = false;
+        isDownwardsDashing = false;
     }
     
     IEnumerator UpwardDash()
     {
         soundManager.playDashSound();
         isDashing = true;
+        isUpwardsDashing = true;
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0;
         dash.Play();
@@ -193,6 +198,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(dashDuration);
         rb.gravityScale = originalGravity;
         isDashing = false;
+        isUpwardsDashing = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
