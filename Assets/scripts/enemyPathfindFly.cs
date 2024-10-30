@@ -4,14 +4,23 @@ using UnityEngine;
 
 public class enemyPathfindFly : MonoBehaviour
 {
-    public Transform player; // Reference to the player's transform
+    private Transform player; // Reference to the player's transform
     public float speed = 5f; // Speed of the enemy
     public float obstacleAvoidanceDistance = 2f; // Distance to check for obstacles
     public LayerMask obstacleLayer; // Layer mask to identify obstacles
 
     public GameObject deathEffect;
     public GameObject deathEffect2;
-    public cameraShake cameraShake;
+    private cameraShake cameraShake;
+
+    private Rigidbody2D rb;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        player = FindFirstObjectByType<PlayerMovement>().transform;
+        cameraShake = FindFirstObjectByType<cameraShake>();
+    }
 
     void Update()
     {
@@ -27,11 +36,11 @@ public class enemyPathfindFly : MonoBehaviour
         }
 
         // Move the enemy in the adjusted direction
-        transform.position += direction * (speed * Time.deltaTime);
+        rb.linearVelocity = direction * speed;
 
         // Calculate the angle and rotate the enemy to face the player
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        rb.rotation = angle;
     }
 
     public void death()

@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce;
     public float dashSpeed;
     public float dashDuration;
-    private bool isDashing = false;
+    public bool isDashing = false;
     private bool isSliding = false;
 
     [Header("Wall Running/Jumping")]
@@ -21,7 +21,6 @@ public class PlayerMovement : MonoBehaviour
     public Collider2D coll;
     public ParticleSystem dash;
     public PlayerSoundManager soundManager;
-
 
     // Ground check
     public Transform groundCheck;
@@ -39,10 +38,9 @@ public class PlayerMovement : MonoBehaviour
     private bool slideInput;
 
     private bool canDash = true;
-    
 
     public PlayerUIManager playerUIManager;
-    
+
     public GameObject eye;
     public GameObject eye1;
     public GameObject eye2;
@@ -56,6 +54,8 @@ public class PlayerMovement : MonoBehaviour
         moveInput = Input.GetAxis("Horizontal");
         jumpInput = Input.GetButtonDown("Jump");
         dashInput = Input.GetKeyDown(KeyCode.LeftShift);
+        bool downDashInput = dashInput && Input.GetKey(KeyCode.S);
+        bool upDashInput = dashInput && Input.GetKey(KeyCode.W); // Check for upward dash input
 
         if (isGrounded)
         {
@@ -78,7 +78,18 @@ public class PlayerMovement : MonoBehaviour
 
         if (dashInput && !isDashing && canDash)
         {
-            StartCoroutine(Dash());
+            if (downDashInput)
+            {
+                StartCoroutine(DownwardDash());
+            }
+            else if (upDashInput)
+            {
+                StartCoroutine(UpwardDash());
+            }
+            else
+            {
+                StartCoroutine(Dash());
+            }
             canDash = false;
         }
 
@@ -91,6 +102,7 @@ public class PlayerMovement : MonoBehaviour
             eye.transform.position = eye2.transform.position;
         }
     }
+
 
     void FixedUpdate()
     {
@@ -143,7 +155,6 @@ public class PlayerMovement : MonoBehaviour
         isTouchingWall = false;
         soundManager.playJumpSound();
     }
-    
 
     IEnumerator Dash()
     {
@@ -153,6 +164,32 @@ public class PlayerMovement : MonoBehaviour
         rb.gravityScale = 0;
         dash.Play();
         rb.linearVelocity = new Vector2(moveInput * dashSpeed, 0);
+        yield return new WaitForSeconds(dashDuration);
+        rb.gravityScale = originalGravity;
+        isDashing = false;
+    }
+
+    IEnumerator DownwardDash()
+    {
+        soundManager.playDashSound();
+        isDashing = true;
+        float originalGravity = rb.gravityScale;
+        rb.gravityScale = 0;
+        dash.Play();
+        rb.linearVelocity = new Vector2(0, -dashSpeed);
+        yield return new WaitForSeconds(dashDuration);
+        rb.gravityScale = originalGravity;
+        isDashing = false;
+    }
+    
+    IEnumerator UpwardDash()
+    {
+        soundManager.playDashSound();
+        isDashing = true;
+        float originalGravity = rb.gravityScale;
+        rb.gravityScale = 0;
+        dash.Play();
+        rb.linearVelocity = new Vector2(0, dashSpeed); // Set velocity for upward dash
         yield return new WaitForSeconds(dashDuration);
         rb.gravityScale = originalGravity;
         isDashing = false;

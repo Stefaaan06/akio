@@ -47,7 +47,6 @@ public class platform : MonoBehaviour
         if (playerRb != null)
         {
             playerRb.AddForce(new Vector2(platformVelocity.x, platformVelocity.y) * 25f, ForceMode2D.Impulse);
-            Debug.Log("Player velocity: " + playerRb.linearVelocity);
 
         }
     }

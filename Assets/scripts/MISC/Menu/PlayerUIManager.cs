@@ -19,16 +19,20 @@ public class PlayerUIManager : MonoBehaviour
 
     public void Start()
     {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
     public void death()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         timer.saveTime();
-        pause();
+        pause(true); // Pass true to keep the cursor visible
         continueButton.SetActive(false);
         dead = true;
     }
+
         
     public void restart()
     {
@@ -52,6 +56,9 @@ public class PlayerUIManager : MonoBehaviour
 
     public void backToMenu()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        
         Time.timeScale = 1f;
         SceneManager.LoadScene(1);
     }
@@ -61,11 +68,13 @@ public class PlayerUIManager : MonoBehaviour
         Application.Quit();
     }
 
-    public void pause()
+    public void pause(bool showCursor = false)
     {
         paused = true;
+
         Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        Cursor.visible = showCursor; // Set cursor visibility based on the parameter
+
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
     }
@@ -73,8 +82,10 @@ public class PlayerUIManager : MonoBehaviour
     public void continueLevel()
     {
         paused = false;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        
         pauseMenu.SetActive(false);
 
         foreach (buttonHover b in hoverEffects)

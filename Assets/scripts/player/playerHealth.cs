@@ -11,21 +11,29 @@ public class playerHealth : MonoBehaviour
     public GameObject[] healthObjects;
     public Rigidbody2D rb;
     public float collisionForce = 100f;
-    
+    public float upwardForce = 200f; // New variable for upward force
+
     public PlayerUIManager uiManager;
     public PlayerSoundManager soundManager;
+    public PlayerMovement playerMovement;
 
     private void OnCollisionEnter2D(Collision2D other)
     {
         if(other.gameObject.CompareTag("Enemy"))
         {
+            if(playerMovement.isDashing && other.gameObject.layer == 12)
+            {
+                other.gameObject.GetComponent<health>().removeHP(25);
+                rb.AddForce(new Vector2(0, upwardForce)); // Add upward force
+                return;
+            }
             health--;
             setHealth(health);
             rb.AddForce(collisionForce * (transform.position - other.transform.position).normalized);
             soundManager.playDamageSound();
         }
     }
-    
+
     void setHealth(int newHealth)
     {
         health = newHealth;
@@ -39,7 +47,7 @@ public class playerHealth : MonoBehaviour
             {
                 healthObjects[i].SetActive(false);
             }
-        }     
+        }
         if(health <= 0)
         {
             Die();
