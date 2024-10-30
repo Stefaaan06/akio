@@ -6,10 +6,11 @@ using Unity.Services.Authentication;
 using Unity.Services.Leaderboards;
 using UnityEngine;
 using Unity.Services.Core;
+using System.Threading.Tasks;
 
 public class LeaderboardManager : MonoBehaviour
 {
-    public string leaderboardID = "time";
+    public string leaderboardID = "level0";
     public TextMeshProUGUI leaderboardText;
     public RectTransform content;
     public TextMeshProUGUI playerNameText;
@@ -43,17 +44,25 @@ public class LeaderboardManager : MonoBehaviour
         playerNameText.text = $"Player: {AuthenticationService.Instance.PlayerName}";
     }
 
-    public async void DisplayPersonalBest()
+    public async void DisplayPersonalBest(string id)
     {
-        var scoresResponse = await LeaderboardsService.Instance.GetPlayerScoreAsync(leaderboardID);
-        rankText.text = $"Rank: {scoresResponse.Rank + 1}";
+        try{
+            var scoresResponse = await LeaderboardsService.Instance.GetPlayerScoreAsync(id);
+            rankText.text = $"Rank: {scoresResponse.Rank + 1}";
+        }
+        catch(Exception ex)
+        {
+            rankText.text = "Rank: N/A";
+        }
     }
-
-    public async void GetScores()
+    
+    
+    public async void GetScores(string id)
     {
         try
         {
-            var scoresResponse = await LeaderboardsService.Instance.GetScoresAsync(leaderboardID, new GetScoresOptions { Limit = 100 });
+            DisplayPersonalBest(id);
+            var scoresResponse = await LeaderboardsService.Instance.GetScoresAsync(id, new GetScoresOptions { Limit = 100 });
             string json = JsonConvert.SerializeObject(scoresResponse);
             LeaderboardData leaderboardData = JsonConvert.DeserializeObject<LeaderboardData>(json);
 
@@ -74,7 +83,7 @@ public class LeaderboardManager : MonoBehaviour
         }
         catch (Exception ex)
         {
-            Debug.LogError($"Error fetching leaderboard scores: {ex.Message}");
+            Debug.LogError($"Error fetching leaderboard scores: {ex.Message}", this);
         }
     }
 }
