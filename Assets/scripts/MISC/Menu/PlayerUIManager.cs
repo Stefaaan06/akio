@@ -68,7 +68,7 @@ public class PlayerUIManager : MonoBehaviour
         Application.Quit();
     }
 
-    public void pause(bool showCursor = false)
+    public void pause(bool showCursor = true)
     {
         paused = true;
 
