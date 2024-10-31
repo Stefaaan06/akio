@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 public class LeaderboardManager : MonoBehaviour
 {
-    public string leaderboardID = "level0";
+    private string leaderboardID = "level0";
     public TextMeshProUGUI leaderboardText;
     public RectTransform content;
     public TextMeshProUGUI playerNameText;
@@ -37,6 +37,7 @@ public class LeaderboardManager : MonoBehaviour
     {
         await UnityServices.InitializeAsync();
         await LeaderboardsService.Instance.AddPlayerScoreAsync(leaderboardID, score);
+        Debug.Log($"Score of {score} reported to leaderboard {leaderboardID}");
     }
 
     public void DisplayUserName()

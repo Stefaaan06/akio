@@ -111,7 +111,7 @@ public class DiscordController : MonoBehaviour
                 Assets = 
                 {
                     LargeImage = "akiologo",
-                    LargeText = "Download Akio on itch.io for free"
+                    LargeText = "Download on itch.io for free"
                 },
                 Timestamps = 
                 {
