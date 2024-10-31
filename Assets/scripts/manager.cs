@@ -21,7 +21,7 @@ public class manager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F11))
         {
-            UnityEditor.EditorWindow.focusedWindow.maximized = !UnityEditor.EditorWindow.focusedWindow.maximized;
+            Screen.fullScreen = !Screen.fullScreen;
         }
     }
 }
