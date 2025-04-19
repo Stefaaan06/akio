@@ -22,4 +22,4 @@ If you encounter any issues or have feedback, feel free to join my [Discord](htt
 
 # Legal Details
 
-This project is licensed under the terms of the [Apache License 2.0](https://opensource.org/licenses/Apache-2.0) - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the terms of the GPL 3.0 License- see the [LICENSE](LICENSE) file for details.
